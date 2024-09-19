@@ -23,10 +23,8 @@ public class Rot13{
                     continue;
                 }
                 boolean sePasa = letraAbecedarioINT + 13 >= abecedarioMayus.length; // boolean que indica si se pasa o no
-                int a = sePasa ? XXX : letraAbecedarioINT + 13; 
-                int b = XXX;
+                int a = letraAbecedarioINT + 13; 
                 if(sePasa){
-                    cadenaCifrada += XXX;
                     continue;
                 } 
                 cadenaCifrada += abecedarioMayus[a]; //position = i + 13
