@@ -18,17 +18,27 @@ public class Rot13{
         for(int letraCadenaINT = 0;letraCadenaINT<cadena.length();letraCadenaINT++){ //bucle que recorre la cadena que se introduce en el parametro
             char letraCadenaCHR = cadena.charAt(letraCadenaINT);
             for(int letraAbecedarioINT = 0;letraAbecedarioINT<abecedarioMayus.length;letraAbecedarioINT++){ //bucle que itera en el abecedario mayusculas
-                char letraAbecedarioCHR = abecedarioMayus[letraAbecedarioINT];
-                if(letraAbecedarioCHR!=letraCadenaCHR){ //si no es la misma letra, continua con la siguiente letra
-                    continue;
+                char letraAbecedarioMayusCHR = abecedarioMayus[letraAbecedarioINT];
+                char letraAbecedarioMinusCHR = abecedarioMinus[letraAbecedarioINT];
+                if(letraAbecedarioMayusCHR!=letraCadenaCHR){ //si no es la misma letra en mayusculas, lo comprueba con las minusculas
+                    if(letraAbecedarioMinusCHR!=letraCadenaCHR){
+                        continue;
+                    }
                 }
                 boolean sePasa = letraAbecedarioINT + 13 >= abecedarioMayus.length; // boolean que indica si se pasa o no
                 if(sePasa){
-                    cadenaCifrada += abecedarioMayus[(letraAbecedarioINT + 13) - abecedarioMayus.length];
+                    if(Character.isUpperCase(letraCadenaCHR)){
+                        cadenaCifrada += abecedarioMayus[(letraAbecedarioINT + 13) - abecedarioMayus.length];
+                        continue;
+                    }
+                    cadenaCifrada += abecedarioMinus[(letraAbecedarioINT + 13) - abecedarioMayus.length];
                     continue;
                 }
-                cadenaCifrada += abecedarioMayus[letraAbecedarioINT + 13];
-                continue;
+                if(Character.isUpperCase(letraCadenaCHR)){
+                    cadenaCifrada += abecedarioMayus[letraAbecedarioINT + 13];
+                    continue;
+                }
+                cadenaCifrada += abecedarioMinus[letraAbecedarioINT + 13];
 
             }
         }
