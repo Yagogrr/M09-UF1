@@ -23,12 +23,13 @@ public class Rot13{
                     continue;
                 }
                 boolean sePasa = letraAbecedarioINT + 13 >= abecedarioMayus.length; // boolean que indica si se pasa o no
-                int a = letraAbecedarioINT + 13; 
                 if(sePasa){
+                    cadenaCifrada += abecedarioMayus[(letraAbecedarioINT + 13) - abecedarioMayus.length];
                     continue;
-                } 
-                cadenaCifrada += abecedarioMayus[a]; //position = i + 13
+                }
+                cadenaCifrada += abecedarioMayus[letraAbecedarioINT + 13];
                 continue;
+
             }
         }
         return cadenaCifrada;
