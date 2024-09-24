@@ -13,7 +13,6 @@ public class Rot13{
     //función para cifrar
     public static String xifraRot13(String cadena){
         if(cadena.isBlank()){ return "";} //si la cadena esta vacia no hace nada
-
         String cadenaCifrada = "";
         for(int letraCadenaINT = 0;letraCadenaINT<cadena.length();letraCadenaINT++){ //bucle que recorre la cadena que se introduce en el parametro
             char letraCadenaCHR = cadena.charAt(letraCadenaINT);
@@ -44,19 +43,55 @@ public class Rot13{
         }
         return cadenaCifrada;
     }
+    public static String desxifraRot13(String cadena){
+        if(cadena.isBlank()){ return "";} //si la cadena esta vacia no hace nada
+        String cadenaDescifrada = "";
+        for(int letraCadenaINT = 0;letraCadenaINT<cadena.length();letraCadenaINT++){ //bucle que recorre la cadena que se introduce en el parametro
+            char letraCadenaCHR = cadena.charAt(letraCadenaINT);
+            for(int letraAbecedarioINT = 0;letraAbecedarioINT<abecedarioMayus.length;letraAbecedarioINT++){ //bucle que itera en el abecedario mayusculas
+                char letraAbecedarioMayusCHR = abecedarioMayus[letraAbecedarioINT];
+                char letraAbecedarioMinusCHR = abecedarioMinus[letraAbecedarioINT];
+                if(letraAbecedarioMayusCHR!=letraCadenaCHR){ //si no es la misma letra en mayusculas, lo comprueba con las minusculas
+                    if(letraAbecedarioMinusCHR!=letraCadenaCHR){
+                        continue;
+                    }
+                }
+                boolean sePasa = letraAbecedarioINT < 13 ; // boolean que indica si se pasa o no
+                if(sePasa){
+                    cadenaDescifrada += abecedarioMayus[abecedarioMayus.length - (13-letraAbecedarioINT)];
+                    continue;
+                }
+                cadenaDescifrada += abecedarioMayus[letraAbecedarioINT - 13];
+                continue;
+            }
+        }
+        return cadenaDescifrada;
+        
+    }
 
     public static void main(String[] args) {
         String texto = "";
-        try(Scanner scanner = new Scanner(System.in)){
-            System.out.printf("Ingresa un texto:");
+        String opcion = "";
+        Scanner scanner = new Scanner(System.in);
+        while(!opcion.equals("c")&&!opcion.equals("d")){
+                System.out.printf("Cifrar o Descifrar?(c) o (d): ");
+                opcion = scanner.nextLine().trim().toLowerCase();
+                System.out.println();
+        }
+        while(texto.isBlank()){
+            System.out.printf("Ingresa un texto: ");
             texto = scanner.nextLine();
             System.out.println();
+            if(texto.isBlank()){
+                System.out.println("El texto no puede ser en blanco");
+                continue;
+            }
         }
-        if(xifraRot13(texto).isBlank()){
-            System.out.println("El texto no puede ser en blanco");
-            return;
+        if(opcion.equals("c")){
+            System.out.printf("Texto cifrado: %s%n",xifraRot13(texto));
+            scanner.close();
         }
-        System.out.printf("Texto cifrado: %s%n",xifraRot13(texto));
-
+        System.out.printf("Texto descifrado: %s%n",desxifraRot13(texto));
+        scanner.close();
     }
 }
