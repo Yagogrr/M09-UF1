@@ -58,10 +58,18 @@ public class Rot13{
                 }
                 boolean sePasa = letraAbecedarioINT < 13 ; // boolean que indica si se pasa o no
                 if(sePasa){
-                    cadenaDescifrada += abecedarioMayus[abecedarioMayus.length - (13-letraAbecedarioINT)];
+                    if(Character.isUpperCase(letraCadenaCHR)){
+                        cadenaDescifrada += abecedarioMayus[abecedarioMayus.length - (13-letraAbecedarioINT)];
+                        continue;
+                    }
+                    cadenaDescifrada += abecedarioMinus[abecedarioMayus.length - (13-letraAbecedarioINT)];
                     continue;
                 }
-                cadenaDescifrada += abecedarioMayus[letraAbecedarioINT - 13];
+                if(Character.isUpperCase(letraCadenaCHR)){
+                    cadenaDescifrada += abecedarioMayus[letraAbecedarioINT - 13];
+                    continue;
+                }
+                cadenaDescifrada += abecedarioMinus[letraAbecedarioINT - 13];
                 continue;
             }
         }
@@ -77,6 +85,10 @@ public class Rot13{
                 System.out.printf("Cifrar o Descifrar?(c) o (d): ");
                 opcion = scanner.nextLine().trim().toLowerCase();
                 System.out.println();
+                if(!opcion.equals("c")&&!opcion.equals("d")){
+                    System.out.println("Opcion no valida");
+                    continue;
+                }
         }
         while(texto.isBlank()){
             System.out.printf("Ingresa un texto: ");
