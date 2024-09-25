@@ -20,7 +20,7 @@ public class Rot13{
                 char letraAbecedarioMayusCHR = abecedarioMayus[letraAbecedarioINT];
                 char letraAbecedarioMinusCHR = abecedarioMinus[letraAbecedarioINT];
                 if(letraAbecedarioMayusCHR!=letraCadenaCHR){ //si no es la misma letra en mayusculas, lo comprueba con las minusculas
-                    if(letraAbecedarioMinusCHR!=letraCadenaCHR){
+                    if(letraAbecedarioMinusCHR!=letraCadenaCHR){    
                         continue;
                     }
                 }
