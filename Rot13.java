@@ -102,8 +102,10 @@ public class Rot13{
         if(opcion.equals("c")){
             System.out.printf("Texto cifrado: %s%n",xifraRot13(texto));
             scanner.close();
+            return;
         }
         System.out.printf("Texto descifrado: %s%n",desxifraRot13(texto));
         scanner.close();
+        return;
     }
 }
