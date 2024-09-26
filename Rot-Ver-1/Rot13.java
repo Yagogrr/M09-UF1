@@ -3,7 +3,7 @@
  *  -Upper Constants :)
  *  -Accents :)
  *  -If is not letter, it write it without codify it :)
- *  -Change variable names
+ *  -Change variable names :)
  *  -String buffer
  * 
  * V1 changes:
@@ -26,30 +26,30 @@ public class Rot13{
     public static String xifraRot13(String cadena){
         if(cadena.isBlank()){ return "";} //si la cadena esta vacia no hace nada
         String cadenaCifrada = "";
-        for(int letraCadenaINT = 0;letraCadenaINT<cadena.length();letraCadenaINT++){ //bucle que recorre la cadena que se introduce en el parametro
-            char letraCadenaCHR = cadena.charAt(letraCadenaINT);
-            if(!Character.isLetter(letraCadenaCHR)){
-                cadenaCifrada += letraCadenaCHR;
+        for(int i = 0;i<cadena.length();i++){ //bucle que recorre la cadena que se introduce en el parametro
+            char letra = cadena.charAt(i);
+            if(!Character.isLetter(letra)){
+                cadenaCifrada += letra;
                 continue;
             }
-            for(int letraAbecedarioINT = 0;letraAbecedarioINT<ABECEDARIO_MAYUS.length;letraAbecedarioINT++){ //bucle que itera en el abecedario mayusculas
-                if(Character.toLowerCase(letraCadenaCHR)!=ABECEDARIO_MINUS[letraAbecedarioINT]){
+            for(int j = 0;j<ABECEDARIO_MAYUS.length;j++){ //bucle que itera en el abecedario mayusculas
+                if(Character.toLowerCase(letra)!=ABECEDARIO_MINUS[j]){
                     continue;
                 }
-                boolean sePasa = letraAbecedarioINT + 13 >= ABECEDARIO_MAYUS.length; // boolean que indica si se pasa o no
+                boolean sePasa = j + 13 >= ABECEDARIO_MAYUS.length; // boolean que indica si se pasa o no
                 if(sePasa){
-                    if(Character.isUpperCase(letraCadenaCHR)){
-                        cadenaCifrada += ABECEDARIO_MAYUS[(letraAbecedarioINT + 13) - ABECEDARIO_MAYUS.length];
+                    if(Character.isUpperCase(letra)){
+                        cadenaCifrada += ABECEDARIO_MAYUS[(j + 13) - ABECEDARIO_MAYUS.length];
                         continue;
                     }
-                    cadenaCifrada += ABECEDARIO_MINUS[(letraAbecedarioINT + 13) - ABECEDARIO_MAYUS.length];
+                    cadenaCifrada += ABECEDARIO_MINUS[(j + 13) - ABECEDARIO_MAYUS.length];
                     continue;
                 }
-                if(Character.isUpperCase(letraCadenaCHR)){
-                    cadenaCifrada += ABECEDARIO_MAYUS[letraAbecedarioINT + 13];
+                if(Character.isUpperCase(letra)){
+                    cadenaCifrada += ABECEDARIO_MAYUS[j + 13];
                     continue;
                 }
-                cadenaCifrada += ABECEDARIO_MINUS[letraAbecedarioINT + 13];
+                cadenaCifrada += ABECEDARIO_MINUS[j + 13];
                 continue;
 
             }
@@ -59,30 +59,30 @@ public class Rot13{
     public static String desxifraRot13(String cadena){
         if(cadena.isBlank()){ return "";} //si la cadena esta vacia no hace nada
         String cadenaDescifrada = "";
-        for(int letraCadenaINT = 0;letraCadenaINT<cadena.length();letraCadenaINT++){ //bucle que recorre la cadena que se introduce en el parametro
-            char letraCadenaCHR = cadena.charAt(letraCadenaINT);
-            if(!Character.isLetter(letraCadenaCHR)){
-                cadenaDescifrada += letraCadenaCHR;
+        for(int i = 0;i<cadena.length();i++){ //bucle que recorre la cadena que se introduce en el parametro
+            char letra = cadena.charAt(i);
+            if(!Character.isLetter(letra)){
+                cadenaDescifrada += letra;
                 continue;
             }
-            for(int letraAbecedarioINT = 0;letraAbecedarioINT<ABECEDARIO_MAYUS.length;letraAbecedarioINT++){ //bucle que itera en el abecedario mayusculas
-                if(Character.toLowerCase(letraCadenaCHR)!=ABECEDARIO_MINUS[letraAbecedarioINT]){
+            for(int j = 0;j<ABECEDARIO_MAYUS.length;j++){ //bucle que itera en el abecedario mayusculas
+                if(Character.toLowerCase(letra)!=ABECEDARIO_MINUS[j]){
                     continue;
                 }
-                boolean sePasa = letraAbecedarioINT < 13 ; // boolean que indica si se pasa o no
+                boolean sePasa = j < 13 ; // boolean que indica si se pasa o no
                 if(sePasa){
-                    if(Character.isUpperCase(letraCadenaCHR)){
-                        cadenaDescifrada += ABECEDARIO_MAYUS[ABECEDARIO_MAYUS.length - (13-letraAbecedarioINT)];
+                    if(Character.isUpperCase(letra)){
+                        cadenaDescifrada += ABECEDARIO_MAYUS[ABECEDARIO_MAYUS.length - (13-j)];
                         continue;
                     }
-                    cadenaDescifrada += ABECEDARIO_MINUS[ABECEDARIO_MAYUS.length - (13-letraAbecedarioINT)];
+                    cadenaDescifrada += ABECEDARIO_MINUS[ABECEDARIO_MAYUS.length - (13-j)];
                     continue;
                 }
-                if(Character.isUpperCase(letraCadenaCHR)){
-                    cadenaDescifrada += ABECEDARIO_MAYUS[letraAbecedarioINT - 13];
+                if(Character.isUpperCase(letra)){
+                    cadenaDescifrada += ABECEDARIO_MAYUS[j - 13];
                     continue;
                 }
-                cadenaDescifrada += ABECEDARIO_MINUS[letraAbecedarioINT - 13];
+                cadenaDescifrada += ABECEDARIO_MINUS[j - 13];
                 continue;
             }
         }
