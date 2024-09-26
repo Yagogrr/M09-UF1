@@ -5,6 +5,7 @@
  *  -If is not letter, it write it without codify it :)
  *  -Change variable names :)
  *  -String buffer :)
+ *  - Fix descifra
  * 
  * V1 changes:
  *  -xifraRotX(): Like the old vesion but instead of 13, x
@@ -16,12 +17,6 @@ import java.util.Scanner;
 public class Rot13{
     public static final char[] ABECEDARIO_MAYUS = {'Á', 'À', 'Ä', 'A', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E', 'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù', 'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public static final char[] ABECEDARIO_MINUS = {'á', 'à', 'ä', 'a', 'b', 'c', 'ç', 'd', 'é', 'è', 'ë', 'e', 'f', 'g', 'h', 'í', 'ì', 'ï', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'ó', 'ò', 'ö', 'o', 'p', 'q', 'r', 's', 't', 'ú', 'ù', 'ü', 'u', 'v', 'w', 'x', 'y', 'z'};
-    public static boolean contains(char[] array,char c){
-        for(int i = 0;i<array.length;i++){
-            if(array[i]==c){return true;}
-        }
-        return false;
-    }
     //función para cifrar
     public static StringBuffer xifraRot13(String cadena){
         if(cadena.isBlank()){ return null;} //si la cadena esta vacia no hace nada
