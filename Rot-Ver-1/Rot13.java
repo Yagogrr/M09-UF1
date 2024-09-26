@@ -2,7 +2,7 @@
  * Fixes:
  *  -Upper Constants :)
  *  -Accents :)
- *  -If is not letter, it write it without codify it 
+ *  -If is not letter, it write it without codify it :)
  *  -Change variable names
  *  -String buffer
  * 
@@ -28,13 +28,13 @@ public class Rot13{
         String cadenaCifrada = "";
         for(int letraCadenaINT = 0;letraCadenaINT<cadena.length();letraCadenaINT++){ //bucle que recorre la cadena que se introduce en el parametro
             char letraCadenaCHR = cadena.charAt(letraCadenaINT);
+            if(!Character.isLetter(letraCadenaCHR)){
+                cadenaCifrada += letraCadenaCHR;
+                continue;
+            }
             for(int letraAbecedarioINT = 0;letraAbecedarioINT<ABECEDARIO_MAYUS.length;letraAbecedarioINT++){ //bucle que itera en el abecedario mayusculas
-                char letraAbecedarioMayusCHR = ABECEDARIO_MAYUS[letraAbecedarioINT];
-                char letraAbecedarioMinusCHR = ABECEDARIO_MINUS[letraAbecedarioINT];
-                if(letraAbecedarioMayusCHR!=letraCadenaCHR){ //si no es la misma letra en mayusculas, lo comprueba con las minusculas
-                    if(letraAbecedarioMinusCHR!=letraCadenaCHR){    
-                        continue;
-                    }
+                if(Character.toLowerCase(letraCadenaCHR)!=ABECEDARIO_MINUS[letraAbecedarioINT]){
+                    continue;
                 }
                 boolean sePasa = letraAbecedarioINT + 13 >= ABECEDARIO_MAYUS.length; // boolean que indica si se pasa o no
                 if(sePasa){
@@ -61,13 +61,13 @@ public class Rot13{
         String cadenaDescifrada = "";
         for(int letraCadenaINT = 0;letraCadenaINT<cadena.length();letraCadenaINT++){ //bucle que recorre la cadena que se introduce en el parametro
             char letraCadenaCHR = cadena.charAt(letraCadenaINT);
+            if(!Character.isLetter(letraCadenaCHR)){
+                cadenaDescifrada += letraCadenaCHR;
+                continue;
+            }
             for(int letraAbecedarioINT = 0;letraAbecedarioINT<ABECEDARIO_MAYUS.length;letraAbecedarioINT++){ //bucle que itera en el abecedario mayusculas
-                char letraAbecedarioMayusCHR = ABECEDARIO_MAYUS[letraAbecedarioINT];
-                char letraAbecedarioMinusCHR = ABECEDARIO_MINUS[letraAbecedarioINT];
-                if(letraAbecedarioMayusCHR!=letraCadenaCHR){ //si no es la misma letra en mayusculas, lo comprueba con las minusculas
-                    if(letraAbecedarioMinusCHR!=letraCadenaCHR){
-                        continue;
-                    }
+                if(Character.toLowerCase(letraCadenaCHR)!=ABECEDARIO_MINUS[letraAbecedarioINT]){
+                    continue;
                 }
                 boolean sePasa = letraAbecedarioINT < 13 ; // boolean que indica si se pasa o no
                 if(sePasa){
