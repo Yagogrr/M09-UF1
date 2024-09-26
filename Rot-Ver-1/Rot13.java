@@ -4,7 +4,7 @@
  *  -Accents :)
  *  -If is not letter, it write it without codify it :)
  *  -Change variable names :)
- *  -String buffer
+ *  -String buffer :)
  * 
  * V1 changes:
  *  -xifraRotX(): Like the old vesion but instead of 13, x
