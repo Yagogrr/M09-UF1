@@ -8,16 +8,17 @@
  *  - Fix acentos :)
  * 
  * V1 changes:
- *  -xifraRotX(): Like the old vesion but instead of 13, x
- *  -desxifrarotx(): Like the old vesion but instead of 13, x
+ *  -xifraRotX(): Like the old vesion but instead of 13,x :)
+ *  -desxifrarotx(): Like the old vesion but instead of 13, x :)
  *  -forcaBrutaRotX(): Tries every posibility to decode
+ *  - main tests
  */
 
-public class Rot13{
+public class Rotx{
     public static final char[] ABECEDARIO_MAYUS = {'Á', 'À', 'Ä', 'A', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E', 'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù', 'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public static final char[] ABECEDARIO_MINUS = {'á', 'à', 'ä', 'a', 'b', 'c', 'ç', 'd', 'é', 'è', 'ë', 'e', 'f', 'g', 'h', 'í', 'ì', 'ï', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'ó', 'ò', 'ö', 'o', 'p', 'q', 'r', 's', 't', 'ú', 'ù', 'ü', 'u', 'v', 'w', 'x', 'y', 'z'};
     //función para cifrar
-    public static StringBuffer xifraRot13(String cadena){
+    public static StringBuffer xifraRotx(String cadena,int x){
         if(cadena.isBlank()){ return null;} //si la cadena esta vacia no hace nada
         StringBuffer cadenaCifrada = new StringBuffer();
         for(int i = 0;i<cadena.length();i++){ //bucle que recorre la cadena que se introduce en el parametro
@@ -30,27 +31,27 @@ public class Rot13{
                 if(Character.toLowerCase(letra)!=ABECEDARIO_MINUS[j]){ //si no es esa letra del abecedario, continua con la siguiente
                     continue;
                 }
-                boolean sePasa = j + 13 >= ABECEDARIO_MAYUS.length; // boolean que indica si se pasa o no
+                boolean sePasa = j + x >= ABECEDARIO_MAYUS.length; // boolean que indica si se pasa o no
                 if(sePasa){
                     if(Character.isUpperCase(letra)){
-                        cadenaCifrada.append(ABECEDARIO_MAYUS[(j + 13) - ABECEDARIO_MAYUS.length]);
+                        cadenaCifrada.append(ABECEDARIO_MAYUS[(j + x) - ABECEDARIO_MAYUS.length]);
                         continue;
                     }
-                    cadenaCifrada.append(ABECEDARIO_MINUS[(j + 13) - ABECEDARIO_MAYUS.length]);
+                    cadenaCifrada.append(ABECEDARIO_MINUS[(j + x) - ABECEDARIO_MAYUS.length]);
                     continue;
                 }
                 if(Character.isUpperCase(letra)){
-                    cadenaCifrada.append(ABECEDARIO_MAYUS[j + 13]);
+                    cadenaCifrada.append(ABECEDARIO_MAYUS[j + x]);
                     continue;
                 }
-                cadenaCifrada.append(ABECEDARIO_MINUS[j + 13]);
+                cadenaCifrada.append(ABECEDARIO_MINUS[j + x]);
                 continue;
 
             }
         }
         return cadenaCifrada;
     }
-    public static StringBuffer desxifraRot13(String cadena){
+    public static StringBuffer desxifraRotx(String cadena,int x){
         if(cadena.isBlank()){ return null;} //si la cadena esta vacia no hace nada
         StringBuffer cadenaDescifrada = new StringBuffer();
         for(int i = 0;i<cadena.length();i++){ //bucle que recorre la cadena que se introduce en el parametro
@@ -63,20 +64,20 @@ public class Rot13{
                 if(Character.toLowerCase(letra)!=ABECEDARIO_MINUS[j]){
                     continue;
                 }
-                boolean sePasa = j < 13 ; // boolean que indica si se pasa o no
+                boolean sePasa = j < x ; // boolean que indica si se pasa o no
                 if(sePasa){
                     if(Character.isUpperCase(letra)){
-                        cadenaDescifrada.append( ABECEDARIO_MAYUS[ABECEDARIO_MAYUS.length - (13-j)]);
+                        cadenaDescifrada.append( ABECEDARIO_MAYUS[ABECEDARIO_MAYUS.length - (x-j)]);
                         continue;
                     }
-                    cadenaDescifrada.append( ABECEDARIO_MINUS[ABECEDARIO_MAYUS.length - (13-j)]);
+                    cadenaDescifrada.append( ABECEDARIO_MINUS[ABECEDARIO_MAYUS.length - (x-j)]);
                     continue;
                 }
                 if(Character.isUpperCase(letra)){
-                    cadenaDescifrada.append( ABECEDARIO_MAYUS[j - 13]);
+                    cadenaDescifrada.append( ABECEDARIO_MAYUS[j - x]);
                     continue;
                 }
-                cadenaDescifrada.append( ABECEDARIO_MINUS[j - 13]);
+                cadenaDescifrada.append( ABECEDARIO_MINUS[j - x]);
                 continue;
             }
         }
@@ -85,7 +86,7 @@ public class Rot13{
     }
 
     public static void main(String[] args) {
-        System.out.printf("Texto cifrado: %s%n",xifraRot13("Búenas tárdes"));
-        System.out.printf("Texto descifrado: %s%n",desxifraRot13("áéíóú"));
+        System.out.printf("Texto cifrado: %s%n",xifraRotx("Búenas tárdes",1));
+        System.out.printf("Texto descifrado: %s%n",desxifraRotx("áéíóú",2));
     }
 }
