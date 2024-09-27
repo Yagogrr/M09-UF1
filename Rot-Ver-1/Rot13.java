@@ -5,14 +5,13 @@
  *  -If is not letter, it write it without codify it :)
  *  -Change variable names :)
  *  -String buffer :)
- *  - Fix descifra
+ *  - Fix acentos :)
  * 
  * V1 changes:
  *  -xifraRotX(): Like the old vesion but instead of 13, x
  *  -desxifrarotx(): Like the old vesion but instead of 13, x
  *  -forcaBrutaRotX(): Tries every posibility to decode
  */
-import java.util.Scanner;
 
 public class Rot13{
     public static final char[] ABECEDARIO_MAYUS = {'Á', 'À', 'Ä', 'A', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E', 'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù', 'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'};
@@ -28,7 +27,7 @@ public class Rot13{
                 continue;
             }
             for(int j = 0;j<ABECEDARIO_MAYUS.length;j++){ //bucle que itera en el abecedario mayusculas
-                if(Character.toLowerCase(letra)!=ABECEDARIO_MINUS[j]){
+                if(Character.toLowerCase(letra)!=ABECEDARIO_MINUS[j]){ //si no es esa letra del abecedario, continua con la siguiente
                     continue;
                 }
                 boolean sePasa = j + 13 >= ABECEDARIO_MAYUS.length; // boolean que indica si se pasa o no
@@ -86,34 +85,7 @@ public class Rot13{
     }
 
     public static void main(String[] args) {
-        String texto = "";
-        String opcion = "";
-        Scanner scanner = new Scanner(System.in);
-        while(!opcion.equals("c")&&!opcion.equals("d")){
-                System.out.printf("Cifrar o Descifrar?(c) o (d): ");
-                opcion = scanner.nextLine().trim().toLowerCase();
-                System.out.println();
-                if(!opcion.equals("c")&&!opcion.equals("d")){
-                    System.out.println("Opcion no valida");
-                    continue;
-                }
-        }
-        while(texto.isBlank()){
-            System.out.printf("Ingresa un texto: ");
-            texto = scanner.nextLine();
-            System.out.println();
-            if(texto.isBlank()){
-                System.out.println("El texto no puede ser en blanco");
-                continue;
-            }
-        }
-        if(opcion.equals("c")){
-            System.out.printf("Texto cifrado: %s%n",xifraRot13(texto));
-            scanner.close();
-            return;
-        }
-        System.out.printf("Texto descifrado: %s%n",desxifraRot13(texto));
-        scanner.close();
-        return;
+        System.out.printf("Texto cifrado: %s%n",xifraRot13("Búenas tárdes"));
+        System.out.printf("Texto descifrado: %s%n",desxifraRot13("áéíóú"));
     }
 }
