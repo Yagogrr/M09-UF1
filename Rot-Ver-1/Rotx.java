@@ -10,16 +10,16 @@
  * V1 changes:
  *  -xifraRotX(): Like the old vesion but instead of 13,x :)
  *  -desxifrarotx(): Like the old vesion but instead of 13, x :)
- *  -forcaBrutaRotX(): Tries every posibility to decode
- *  - main tests
+ *  -forcaBrutaRotX(): Tries every posibility to decode :)
+ *  - main tests :)
  */
 
 public class Rotx{
     public static final char[] ABECEDARIO_MAYUS = {'Á', 'À', 'Ä', 'A', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E', 'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù', 'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public static final char[] ABECEDARIO_MINUS = {'á', 'à', 'ä', 'a', 'b', 'c', 'ç', 'd', 'é', 'è', 'ë', 'e', 'f', 'g', 'h', 'í', 'ì', 'ï', 'i', 'j', 'k', 'l', 'm', 'n', 'ñ', 'ó', 'ò', 'ö', 'o', 'p', 'q', 'r', 's', 't', 'ú', 'ù', 'ü', 'u', 'v', 'w', 'x', 'y', 'z'};
     //función para cifrar
-    public static StringBuffer xifraRotx(String cadena,int x){
-        if(cadena.isBlank()){ return null;} //si la cadena esta vacia no hace nada
+    public static StringBuffer xifraRotx(StringBuffer cadena,int x){
+        if(cadena.isEmpty()){ return null;} //si la cadena esta vacia no hace nada
         StringBuffer cadenaCifrada = new StringBuffer();
         for(int i = 0;i<cadena.length();i++){ //bucle que recorre la cadena que se introduce en el parametro
             char letra = cadena.charAt(i);
@@ -51,8 +51,8 @@ public class Rotx{
         }
         return cadenaCifrada;
     }
-    public static StringBuffer desxifraRotx(String cadena,int x){
-        if(cadena.isBlank()){ return null;} //si la cadena esta vacia no hace nada
+    public static StringBuffer desxifraRotx(StringBuffer cadena,int x){
+        if(cadena.isEmpty()){ return null;} //si la cadena esta vacia no hace nada
         StringBuffer cadenaDescifrada = new StringBuffer();
         for(int i = 0;i<cadena.length();i++){ //bucle que recorre la cadena que se introduce en el parametro
             char letra = cadena.charAt(i);
@@ -84,9 +84,16 @@ public class Rotx{
         return cadenaDescifrada;
         
     }
-
+    public static void forcaBrutaRotX(StringBuffer cadenaCifrada){
+        for(int i = 0;i<ABECEDARIO_MAYUS.length;i++){
+            System.out.printf("%d: %s%n",i,desxifraRotx(cadenaCifrada, i));
+        }
+    }
     public static void main(String[] args) {
-        System.out.printf("Texto cifrado: %s%n",xifraRotx("Búenas tárdes",1));
-        System.out.printf("Texto descifrado: %s%n",desxifraRotx("áéíóú",2));
+        StringBuffer textoCifrado = new StringBuffer(xifraRotx(new StringBuffer("Buenas Tardes"), 4));
+        System.out.printf("Texto cifrado: %s%n",textoCifrado);
+        System.out.printf("Texto descifrado: %s%n",desxifraRotx(textoCifrado,4));
+        System.out.println("Fuerza bruta:");
+        forcaBrutaRotX(textoCifrado);
     }
 }
