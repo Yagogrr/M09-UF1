@@ -12,6 +12,7 @@
  *  -desxifrarotx(): Like the old vesion but instead of 13, x :)
  *  -forcaBrutaRotX(): Tries every posibility to decode :)
  *  - main tests :)
+ * 
  */
 
 public class Rotx{
