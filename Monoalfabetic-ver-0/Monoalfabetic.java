@@ -73,13 +73,17 @@ public class Monoalfabetic {
             //si es un espacio o un punto etc... simplemente lo añade 
             if(!Character.isLetter(letra)){
                 cadenaDescifrada.append(letra);
+                continue;
             }
-            //bucle que recorre el abecedario
-            for(int j = 0;j<ABECEDARIO_MAYUS.length;j++){
+            //bucle que recorre el abecedario permutado
+            for(int j = 0;j<ABECEDARIO_PERMUTADO.length;j++){
 
                 //si la letra coincide, añade su letra permutada
                 if(letra==Character.toLowerCase(ABECEDARIO_PERMUTADO[j])||letra==ABECEDARIO_PERMUTADO[j]){
                     char letraP = ABECEDARIO_MAYUS[j];
+
+                    //distingue entre mayusculas y minusculas
+                    letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
                     cadenaDescifrada.append(letraP);
                     break;
                 }
@@ -87,12 +91,21 @@ public class Monoalfabetic {
         }
         return cadenaDescifrada;
     }
-
     public static void main(String[] args) {
-        System.out.println(ABECEDARIO_PERMUTADO);
-        String cadena = "Hola BuEnas";
-        StringBuffer cadenaCifrada = xifraMonoAlfa(cadena);
-
-        System.out.println("Cadena normal: "+cadena+"\nCadena cifrada: "+cadenaCifrada);
+        String[] frases = {"Potatoes and chips","Rocky god","Something in the way"};
+        System.out.println("Frases normales:");
+        for(String s : frases){
+            System.out.println("- "+s);
+        }
+        System.out.println();
+        System.out.println("Frases cifradas:");
+        for(String s : frases){
+            System.out.println(xifraMonoAlfa("- "+s));
+        }
+        System.out.println();
+        System.err.println("Frases descifradas:");
+        for(String s : frases){
+            System.out.println("- "+desxifraMonoAlfa(xifraMonoAlfa(s).toString()));
+        }
     }
 }
