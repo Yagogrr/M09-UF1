@@ -53,6 +53,9 @@ public class Monoalfabetic {
                 //si la letra coincide, añade su letra permutada
                 if(letra==Character.toLowerCase(ABECEDARIO_MAYUS[j])||letra==ABECEDARIO_MAYUS[j]){
                     char letraP = ABECEDARIO_PERMUTADO[j];
+
+                    //distingue entre mayusculas y minusculas
+                    letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
                     cadenaCifrada.append(letraP);
                     break;
                 }
@@ -86,7 +89,8 @@ public class Monoalfabetic {
     }
 
     public static void main(String[] args) {
-        String cadena = "ABCD";
+        System.out.println(ABECEDARIO_PERMUTADO);
+        String cadena = "Hola BuEnas";
         StringBuffer cadenaCifrada = xifraMonoAlfa(cadena);
 
         System.out.println("Cadena normal: "+cadena+"\nCadena cifrada: "+cadenaCifrada);
