@@ -32,6 +32,15 @@ public class Polialfabetic {
         }
     }
     public static String xifraPoliAlfa(String cadena){
+        return xifraDesxifra(cadena, true);
+    }
+    public static String desxifraPoliAlfa(String cadena){
+        return xifraDesxifra(cadena, false);
+    }
+    public static void initRandom(int contraseña){
+        random = new Random(contraseña);
+    }
+    public static String xifraDesxifra(String cadena,boolean xifra){
         StringBuffer cadenaCifrada = new StringBuffer();
 
         //bucle que recorre la cadena
@@ -49,54 +58,31 @@ public class Polialfabetic {
 
             //bucle que recorre el abecedario
             for(int j = 0;j<ABECEDARIO_MAYUS.length;j++){
+                if(xifra){
+                    //si la letra coincide, añade su letra permutada
+                    if(letra==Character.toLowerCase(ABECEDARIO_MAYUS[j])||letra==ABECEDARIO_MAYUS[j]){
+                        char letraP = abecedario_permutado[j];
 
-                //si la letra coincide, añade su letra permutada
-                if(letra==Character.toLowerCase(ABECEDARIO_MAYUS[j])||letra==ABECEDARIO_MAYUS[j]){
-                    char letraP = abecedario_permutado[j];
+                        //distingue entre mayusculas y minusculas
+                        letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
+                        cadenaCifrada.append(letraP);
+                        break;
+                    }
+                } 
+                else{
+                    //si la letra coincide, añade su letra permutada
+                    if(letra==Character.toLowerCase(abecedario_permutado[j])||letra==abecedario_permutado[j]){
+                        char letraP = ABECEDARIO_MAYUS[j];
 
-                    //distingue entre mayusculas y minusculas
-                    letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
-                    cadenaCifrada.append(letraP);
-                    break;
+                        //distingue entre mayusculas y minusculas
+                        letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
+                        cadenaCifrada.append(letraP);
+                        break;
+                    }
                 }
             }
         }
         return cadenaCifrada.toString();
-    }
-    public static String desxifraPoliAlfa(String cadena){
-        StringBuffer cadenaDescifrada = new StringBuffer();
-
-        //bucle que recorre la cadena
-        for(int i = 0;i<cadena.length();i++){
-            char letra = cadena.charAt(i);
-
-            //si es un espacio o un punto etc... simplemente lo añade 
-            if(!Character.isLetter(letra)){
-                cadenaDescifrada.append(letra);
-                continue;
-            }
-
-            //permuta el alfabeto
-            permutaAlfabet();
-
-            //bucle que recorre el abecedario permutado
-            for(int j = 0;j<abecedario_permutado.length;j++){
-
-                //si la letra coincide, añade su letra permutada
-                if(letra==Character.toLowerCase(abecedario_permutado[j])||letra==abecedario_permutado[j]){
-                    char letraP = ABECEDARIO_MAYUS[j];
-
-                    //distingue entre mayusculas y minusculas
-                    letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
-                    cadenaDescifrada.append(letraP);
-                    break;
-                }
-            }
-        }
-        return cadenaDescifrada.toString();
-    }
-    public static void initRandom(int contraseña){
-        random = new Random(contraseña);
     }
     public static void main ( String [] args ) {
         String msgs[] = { "Test 01 àrbritre, coixí, Perímetre" ,
