@@ -12,8 +12,8 @@ import java.util.Random;
 
 public class Polialfabetic {
     public static final char[] ABECEDARIO_MAYUS = {'A','Á', 'À', 'Ä', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E', 'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù', 'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    public static char[] ABECEDARIO_PERMUTADO;
-    public static Random RANDOM;
+    public static char[] abecedario_permutado;
+    public static Random random;
 
     public static void permutaAlfabet(){
         //creamos una lista y la completamos con el abecedario normal
@@ -23,12 +23,12 @@ public class Polialfabetic {
         }
 
         //lo ponemos random
-        Collections.shuffle(abecedarioList,RANDOM);
+        Collections.shuffle(abecedarioList,random);
 
         //inicializamos el abecedario permutado
-        ABECEDARIO_PERMUTADO = new char[abecedarioList.size()];
+        abecedario_permutado = new char[abecedarioList.size()];
         for (int i = 0; i < abecedarioList.size(); i++) {
-            ABECEDARIO_PERMUTADO[i] = abecedarioList.get(i);
+            abecedario_permutado[i] = abecedarioList.get(i);
         }
     }
     public static String xifraPoliAlfa(String cadena){
@@ -52,7 +52,7 @@ public class Polialfabetic {
 
                 //si la letra coincide, añade su letra permutada
                 if(letra==Character.toLowerCase(ABECEDARIO_MAYUS[j])||letra==ABECEDARIO_MAYUS[j]){
-                    char letraP = ABECEDARIO_PERMUTADO[j];
+                    char letraP = abecedario_permutado[j];
 
                     //distingue entre mayusculas y minusculas
                     letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
@@ -80,10 +80,10 @@ public class Polialfabetic {
             permutaAlfabet();
 
             //bucle que recorre el abecedario permutado
-            for(int j = 0;j<ABECEDARIO_PERMUTADO.length;j++){
+            for(int j = 0;j<abecedario_permutado.length;j++){
 
                 //si la letra coincide, añade su letra permutada
-                if(letra==Character.toLowerCase(ABECEDARIO_PERMUTADO[j])||letra==ABECEDARIO_PERMUTADO[j]){
+                if(letra==Character.toLowerCase(abecedario_permutado[j])||letra==abecedario_permutado[j]){
                     char letraP = ABECEDARIO_MAYUS[j];
 
                     //distingue entre mayusculas y minusculas
@@ -96,7 +96,7 @@ public class Polialfabetic {
         return cadenaDescifrada.toString();
     }
     public static void initRandom(int contraseña){
-        RANDOM = new Random(contraseña);
+        random = new Random(contraseña);
     }
     public static void main ( String [] args ) {
         String msgs[] = { "Test 01 àrbritre, coixí, Perímetre" ,
