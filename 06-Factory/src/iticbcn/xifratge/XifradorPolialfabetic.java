@@ -18,17 +18,22 @@ public class XifradorPolialfabetic implements Xifrador{
 
     public TextXifrat xifra(String msg, String clau) throws  ClauNoSuportada{
         try {
-            initRandom(Integer.parseInt(clau));
+            initRandom(Long.parseLong(clau));
             String resultado = xifraPoliAlfa(msg);
             return new TextXifrat(resultado.getBytes());
         } catch ( NumberFormatException e){
-            System.out.println("La clau de Polialfabètic ha de ser un String convertible a long");
-            return null;
+            throw new ClauNoSuportada("La clau de Polialfabètic ha de ser un String convertible a long");
         }
         
     }
     public String desxifra(TextXifrat xifrat, String clau)  throws ClauNoSuportada{
-
+        try {
+            initRandom(Long.parseLong(clau));
+            String resultado = desxifraPoliAlfa(xifrat.toString());
+            return resultado;
+        } catch ( NumberFormatException e){
+            throw new ClauNoSuportada("La clau de Polialfabètic ha de ser un String convertible a long");
+        }
     }
 
     public void permutaAlfabet(){
@@ -53,7 +58,7 @@ public class XifradorPolialfabetic implements Xifrador{
     public String desxifraPoliAlfa(String cadena){
         return xifraDesxifra(cadena, false);
     }
-    public void initRandom(int contraseña){
+    public void initRandom(long contraseña){
         random = new Random(contraseña);
     }
     public String xifraDesxifra(String cadena,boolean xifra){
@@ -99,23 +104,5 @@ public class XifradorPolialfabetic implements Xifrador{
             }
         }
         return cadenaCifrada.toString();
-    }
-    public void main ( String [] args ) {
-        String msgs[] = { "Test 01 àrbritre, coixí, Perímetre" ,
-        "Test 02 Taüll, DÍA, año" ,
-        "Test 03 Peça, Òrrius, Bòvila" };
-        String msgsXifrats [] = new String [ msgs. length ];
-        System . out . println ( "Xifratge: \n --------" );
-        for ( int i = 0; i < msgs. length ; i ++) {
-            initRandom ( 1234 );
-            msgsXifrats [ i ] = xifraPoliAlfa ( msgs[ i ]);
-            System . out . printf ( "%-34s -> %s%n", msgs[ i ], msgsXifrats [ i ]);
-        }
-        System . out . println ( "Desxifratge: \n -----------" );
-        for ( int i = 0; i < msgs. length ; i ++) {
-            initRandom ( 1234 );
-            String msg = desxifraPoliAlfa ( msgsXifrats [ i ]);
-            System . out . printf ( "%-34s -> %s%n", msgsXifrats [ i ], msg);
-        }
     }
 }

@@ -105,11 +105,4 @@ public class XifradorRotX implements Xifrador{
             System.out.printf("%d: %s%n",i,desxifraRotx(cadenaCifrada, i));
         }
     }
-    public void main(String[] args) {
-        StringBuffer textoCifrado = new StringBuffer(xifraRotx(new StringBuffer("Buenas Tardes"), 4));
-        System.out.printf("Texto cifrado: %s%n",textoCifrado);
-        System.out.printf("Texto descifrado: %s%n",desxifraRotx(textoCifrado,4));
-        System.out.println("Fuerza bruta:");
-        forcaBrutaRotX(textoCifrado);
-    }
 }

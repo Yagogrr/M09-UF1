@@ -19,6 +19,16 @@ public class XifradorMonoalfabetic implements Xifrador {
     public static final char[] ABECEDARIO_MAYUS = {'A','Á', 'À', 'Ä', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E', 'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù', 'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'};
     public final char[] ABECEDARIO_PERMUTADO = permutaAlfabet(ABECEDARIO_MAYUS);
 
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        String xifrat = xifraMonoAlfa(msg).toString();
+        return new TextXifrat(xifrat.getBytes());
+    }
+    public String desxifra(TextXifrat xifrat, String clau)  throws ClauNoSuportada{
+        String desxifrat = desxifraMonoAlfa(xifrat.toString()).toString();
+        return desxifrat;
+    }
+
+    
     public char[] permutaAlfabet(char[] abecedarioChar){
         //creamos una lista y la completamos con el abecedario normal
         List<Character> abecedarioList = new ArrayList<>(); 
@@ -91,22 +101,5 @@ public class XifradorMonoalfabetic implements Xifrador {
             }
         }
         return cadenaDescifrada;
-    }
-    public void main(String[] args) {
-        String[] frases = {"Potatoes and chips","Rocky god","Something in the way"};
-        System.out.println("Frases normales:");
-        for(String s : frases){
-            System.out.println("- "+s);
-        }
-        System.out.println();
-        System.out.println("Frases cifradas:");
-        for(String s : frases){
-            System.out.println(xifraMonoAlfa("- "+s));
-        }
-        System.out.println();
-        System.err.println("Frases descifradas:");
-        for(String s : frases){
-            System.out.println("- "+desxifraMonoAlfa(xifraMonoAlfa(s).toString()));
-        }
     }
 }
