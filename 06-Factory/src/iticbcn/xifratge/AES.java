@@ -14,13 +14,13 @@ public class AES implements Xifrador{
 
     private static final int MIDA_IV = 16; // Tamaño del Vector de Inicialización (16 bytes).
     private static byte[] iv = new byte[MIDA_IV]; // Vector de Inicialización de 16 bytes.
-    private static final String CLAU = "LaClauSecretaQueVulguis"; // Clave secreta para el cifrado.
 
     public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
         try{
             return new TextXifrat(xifraAES(msg, clau));
         } catch (Exception e){
-            throw new ClauNoSuportada(null);
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 
@@ -28,7 +28,8 @@ public class AES implements Xifrador{
         try{
             return desxifraAES(xifrat.getBytes(), clau);
         } catch (Exception e){
-            throw new ClauNoSuportada(null);
+            System.err.println(e.getMessage());
+            return null;
         }
     }
 

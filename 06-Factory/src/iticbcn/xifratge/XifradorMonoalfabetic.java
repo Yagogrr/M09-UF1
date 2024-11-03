@@ -17,9 +17,16 @@ import java.util.Collections;
 
 public class XifradorMonoalfabetic implements Xifrador {
     public static final char[] ABECEDARIO_MAYUS = {'A','Á', 'À', 'Ä', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E', 'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù', 'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    public final char[] ABECEDARIO_PERMUTADO = permutaAlfabet(ABECEDARIO_MAYUS);
+    public char[] ABECEDARIO_PERMUTADO = null;
+
+    public XifradorMonoalfabetic(){
+        this.ABECEDARIO_PERMUTADO = permutaAlfabet(ABECEDARIO_MAYUS);
+    }
 
     public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        if(clau!=null){
+            throw new ClauNoSuportada("La clau de Monolialfabètic no pot ser null");
+        }
         String xifrat = xifraMonoAlfa(msg).toString();
         return new TextXifrat(xifrat.getBytes());
     }
