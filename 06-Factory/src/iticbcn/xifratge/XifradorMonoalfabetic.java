@@ -1,110 +1,133 @@
 package iticbcn.xifratge;
+
 /*
  * Constantes:
- *  -Abecedario estandart :)
- *  -Abecedario permutado: es un abecedario calculado por la funcion permutaAlfabet(alfabet) :)
+ *  -Abecedario estándar :)
+ *  -Abecedario permutado: es un abecedario calculado por la función permutaAlfabet(alfabet) :)
  * 
  * Funciones: 
  *  -permutaAlfabet(alfabet): te devuelve el abecedario permutado :)
  *  -xifraMonoAlfa(cadena): Te cifra con el abecedario permutado :)
- *  -desxifraMonoAlfa(cadena): Te descifra con el abecedario pemutado
+ *  -desxifraMonoAlfa(cadena): Te descifra con el abecedario permutado
  *
- * 
-*/
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
 public class XifradorMonoalfabetic implements Xifrador {
-    public static final char[] ABECEDARIO_MAYUS = {'A','Á', 'À', 'Ä', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E', 'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù', 'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-    public char[] ABECEDARIO_PERMUTADO = null;
+    public static final char[] ABECEDARIO_MAYUS = {
+        'A','Á', 'À', 'Ä', 'B', 'C', 'Ç', 'D', 'É', 'È', 'Ë', 'E',
+        'F', 'G', 'H', 'Í', 'Ì', 'Ï', 'I', 'J', 'K', 'L', 'M', 'N',
+        'Ñ', 'Ó', 'Ò', 'Ö', 'O', 'P', 'Q', 'R', 'S', 'T', 'Ú', 'Ù',
+        'Ü', 'U', 'V', 'W', 'X', 'Y', 'Z'
+    };
+    public final char[] ABECEDARIO_PERMUTADO;
 
     public XifradorMonoalfabetic(){
         this.ABECEDARIO_PERMUTADO = permutaAlfabet(ABECEDARIO_MAYUS);
     }
 
-    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
-        if(clau!=null){
-            throw new ClauNoSuportada("La clau de Monolialfabètic no pot ser null");
+    @Override
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada {
+        if(clau != null){
+            throw new ClauNoSuportada("La clau de Monoalfabètic ha de ser null.");
         }
         String xifrat = xifraMonoAlfa(msg).toString();
         return new TextXifrat(xifrat.getBytes());
     }
-    public String desxifra(TextXifrat xifrat, String clau)  throws ClauNoSuportada{
-        String desxifrat = desxifraMonoAlfa(xifrat.toString()).toString();
+
+    @Override
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada {
+        if(clau != null){
+            throw new ClauNoSuportada("La clau de Monoalfabètic ha de ser null.");
+        }
+        String desxifrat = desxifraMonoAlfa(new String(xifrat.getBytes())).toString();
         return desxifrat;
     }
 
-    
-    public char[] permutaAlfabet(char[] abecedarioChar){
-        //creamos una lista y la completamos con el abecedario normal
+    private char[] permutaAlfabet(char[] abecedarioChar){
+        // Creamos una lista y la completamos con el abecedario normal
         List<Character> abecedarioList = new ArrayList<>(); 
-        for(int i = 0;i<ABECEDARIO_MAYUS.length;i++){
-            abecedarioList.add(ABECEDARIO_MAYUS[i]);
+        for(char c : abecedarioChar){
+            abecedarioList.add(c);
         }
 
-        //lo ponemos random
+        // Lo ponemos en orden aleatorio
         Collections.shuffle(abecedarioList);
 
-        //volvemos a convertirlo a un char[]
+        // Volvemos a convertirlo a un char[]
         char[] abecedarioPermutado = new char[abecedarioList.size()];
         for (int i = 0; i < abecedarioList.size(); i++) {
             abecedarioPermutado[i] = abecedarioList.get(i);
         }
         return abecedarioPermutado;
     }
-    public StringBuffer xifraMonoAlfa(String cadena){
-        StringBuffer cadenaCifrada = new StringBuffer();
 
-        //bucle que recorre la cadena
-        for(int i = 0;i<cadena.length();i++){
+    private StringBuilder xifraMonoAlfa(String cadena){
+        StringBuilder cadenaCifrada = new StringBuilder();
+
+        // Bucle que recorre la cadena
+        for(int i = 0; i < cadena.length(); i++){
             char letra = cadena.charAt(i);
 
-            //si es un espacio o un punto etc... simplemente lo añade 
+            // Si no es una letra, simplemente la añade
             if(!Character.isLetter(letra)){
                 cadenaCifrada.append(letra);
                 continue;
             }
-            //bucle que recorre el abecedario
-            for(int j = 0;j<ABECEDARIO_MAYUS.length;j++){
 
-                //si la letra coincide, añade su letra permutada
-                if(letra==Character.toLowerCase(ABECEDARIO_MAYUS[j])||letra==ABECEDARIO_MAYUS[j]){
+            // Bucle que recorre el abecedario
+            boolean encontrada = false;
+            for(int j = 0; j < ABECEDARIO_MAYUS.length; j++){
+                if(letra == ABECEDARIO_MAYUS[j] || letra == Character.toLowerCase(ABECEDARIO_MAYUS[j])){
                     char letraP = ABECEDARIO_PERMUTADO[j];
-
-                    //distingue entre mayusculas y minusculas
+                    // Distingue entre mayúsculas y minúsculas
                     letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
                     cadenaCifrada.append(letraP);
+                    encontrada = true;
                     break;
                 }
+            }
+
+            // Si no se encuentra la letra en el abecedario, se añade tal cual
+            if(!encontrada){
+                cadenaCifrada.append(letra);
             }
         }
         return cadenaCifrada;
     }
-    public StringBuffer desxifraMonoAlfa(String cadena){
-        StringBuffer cadenaDescifrada = new StringBuffer();
 
-        //bucle que recorre la cadena
-        for(int i = 0;i<cadena.length();i++){
+    private StringBuilder desxifraMonoAlfa(String cadena){
+        StringBuilder cadenaDescifrada = new StringBuilder();
+
+        // Bucle que recorre la cadena
+        for(int i = 0; i < cadena.length(); i++){
             char letra = cadena.charAt(i);
 
-            //si es un espacio o un punto etc... simplemente lo añade 
+            // Si no es una letra, simplemente la añade
             if(!Character.isLetter(letra)){
                 cadenaDescifrada.append(letra);
                 continue;
             }
-            //bucle que recorre el abecedario permutado
-            for(int j = 0;j<ABECEDARIO_PERMUTADO.length;j++){
 
-                //si la letra coincide, añade su letra permutada
-                if(letra==Character.toLowerCase(ABECEDARIO_PERMUTADO[j])||letra==ABECEDARIO_PERMUTADO[j]){
+            // Bucle que recorre el abecedario permutado
+            boolean encontrada = false;
+            for(int j = 0; j < ABECEDARIO_PERMUTADO.length; j++){
+                if(letra == ABECEDARIO_PERMUTADO[j] || letra == Character.toLowerCase(ABECEDARIO_PERMUTADO[j])){
                     char letraP = ABECEDARIO_MAYUS[j];
-
-                    //distingue entre mayusculas y minusculas
+                    // Distingue entre mayúsculas y minúsculas
                     letraP = Character.isLowerCase(letra) ? Character.toLowerCase(letraP) : letraP;
                     cadenaDescifrada.append(letraP);
+                    encontrada = true;
                     break;
                 }
+            }
+
+            // Si no se encuentra la letra en el abecedario permutado, se añade tal cual
+            if(!encontrada){
+                cadenaDescifrada.append(letra);
             }
         }
         return cadenaDescifrada;
