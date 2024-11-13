@@ -1,5 +1,6 @@
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.HexFormat;
 
 import javax.crypto.SecretKeyFactory;
@@ -27,40 +28,50 @@ public class Hashes {
         return hex.formatHex(hash);
     }
 
-    public String forcaBruta(String alg, String hash, String salt) throws NoSuchAlgorithmException, Exception {
+    public String forcaBruta(String alg, String hash, String salt)
+            throws NoSuchAlgorithmException, Exception {
         String charset = "abcdefABCDEF1234567890!";
         int maxLength = 6;
         npass = 0;
-    
+
+        // Iterar sobre todas las posibles longitudes de la contraseña
         for (int length = 1; length <= maxLength; length++) {
+            // Inicializar un array de caracteres para almacenar la contraseña actual
             char[] password = new char[length];
-            String result = bruteForceRecursive(alg, hash, salt, charset, password, 0);
-            if (result != null) {
-                return result;
+            Arrays.fill(password, charset.charAt(0));
+
+            // Generar y probar todas las combinaciones posibles de esta longitud
+            while (true) {
+                npass++;
+                String guess = new String(password);
+                String generatedHash = alg.equals("SHA-512") ? getSHA512AmbSalt(guess, salt)
+                        : getPBKDF2AmbSalt(guess, salt);
+
+                if (generatedHash.equals(hash)) {
+                    return guess;
+                }
+
+                // Incrementar la contraseña al siguiente valor lexicográfico
+                if (!incrementPassword(password, charset)) {
+                    break; // Si no se puede incrementar más, terminamos esta longitud
+                }
             }
         }
-        return null;
+        return null; // No se encontró ninguna coincidencia
     }
-    
-    private String bruteForceRecursive(String alg, String hash, String salt, String charset, char[] password, int position) throws NoSuchAlgorithmException, Exception {
-        if (position == password.length) {
-            npass++;
-            String guess = new String(password);
-            String generatedHash = alg.equals("SHA-512") ? getSHA512AmbSalt(guess, salt) : getPBKDF2AmbSalt(guess, salt);
-            if (generatedHash.equals(hash)) {
-                return guess;
-            }
-            return null;
-        }
-    
-        for (int i = 0; i < charset.length(); i++) {
-            password[position] = charset.charAt(i);
-            String result = bruteForceRecursive(alg, hash, salt, charset, password, position + 1);
-            if (result != null) {
-                return result;
+
+    // Método auxiliar para incrementar la contraseña
+    private boolean incrementPassword(char[] password, String charset) {
+        for (int i = password.length - 1; i >= 0; i--) {
+            int index = charset.indexOf(password[i]);
+            if (index < charset.length() - 1) {
+                password[i] = charset.charAt(index + 1);
+                return true;
+            } else {
+                password[i] = charset.charAt(0);
             }
         }
-        return null;
+        return false; // Si hemos recorrido toda la longitud y no se puede incrementar más
     }
 
     public String getInterval(long t1, long t2) {
