@@ -36,49 +36,49 @@ public class Hashes {
         // longitud 1
         for (int i1 = 0; i1 < charset.length(); i1++) {
             npass++;
-            String guess = "" + charset.charAt(i1);
-            if (checkPassword(guess, alg, hash, salt)) {
-                return guess;
+            String contraseña = "" + charset.charAt(i1);
+            if (checkPassword(contraseña, alg, hash, salt)) {
+                return contraseña;
             }
 
             // longitud 2
             for (int i2 = 0; i2 < charset.length(); i2++) {
                 npass++;
-                guess = "" + charset.charAt(i1) + charset.charAt(i2);
-                if (checkPassword(guess, alg, hash, salt)) {
-                    return guess;
+                contraseña = "" + charset.charAt(i1) + charset.charAt(i2);
+                if (checkPassword(contraseña, alg, hash, salt)) {
+                    return contraseña;
                 }
 
                 // Longitud 3
                 for (int i3 = 0; i3 < charset.length(); i3++) {
                     npass++;
-                    guess = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3);
-                    if (checkPassword(guess, alg, hash, salt)) {
-                        return guess;
+                    contraseña = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3);
+                    if (checkPassword(contraseña, alg, hash, salt)) {
+                        return contraseña;
                     }
 
                     for (int i4 = 0; i4 < charset.length(); i4++) {
                         npass++;
-                        guess = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4);
-                        if (checkPassword(guess, alg, hash, salt)) {
-                            return guess;
+                        contraseña = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4);
+                        if (checkPassword(contraseña, alg, hash, salt)) {
+                            return contraseña;
                         }
 
                         for (int i5 = 0; i5 < charset.length(); i5++) {
                             npass++;
-                            guess = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4)
+                            contraseña = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4)
                                     + charset.charAt(i5);
-                            if (checkPassword(guess, alg, hash, salt)) {
-                                return guess;
+                            if (checkPassword(contraseña, alg, hash, salt)) {
+                                return contraseña;
                             }
 
 
                             for (int i6 = 0; i6 < charset.length(); i6++) {
                                 npass++;
-                                guess = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4)
+                                contraseña = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4)
                                         + charset.charAt(i5) + charset.charAt(i6);
-                                if (checkPassword(guess, alg, hash, salt)) {
-                                    return guess;
+                                if (checkPassword(contraseña, alg, hash, salt)) {
+                                    return contraseña;
                                 }
                             }
                         }
