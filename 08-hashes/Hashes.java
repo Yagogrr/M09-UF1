@@ -21,7 +21,7 @@ public class Hashes {
     public String getPBKDF2AmbSalt(String pw, String salt) throws Exception {
         char[] passwordChars = pw.toCharArray();
         byte[] saltBytes = salt.getBytes();
-        PBEKeySpec spec = new PBEKeySpec(passwordChars, saltBytes, 10000, 128);
+        PBEKeySpec spec = new PBEKeySpec(passwordChars, saltBytes, 65536, 128);
         SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
         byte[] hash = skf.generateSecret(spec).getEncoded();
         HexFormat hex = HexFormat.of();
@@ -29,50 +29,76 @@ public class Hashes {
     }
 
     public String forcaBruta(String alg, String hash, String salt)
-            throws NoSuchAlgorithmException, Exception {
+    throws NoSuchAlgorithmException, Exception {
         String charset = "abcdefABCDEF1234567890!";
-        int maxLength = 6;
         npass = 0;
 
-        // Iterar sobre todas las posibles longitudes de la contraseña
-        for (int length = 1; length <= maxLength; length++) {
-            // Inicializar un array de caracteres para almacenar la contraseña actual
-            char[] password = new char[length];
-            Arrays.fill(password, charset.charAt(0));
+        // longitud 1
+        for (int i1 = 0; i1 < charset.length(); i1++) {
+            npass++;
+            String guess = "" + charset.charAt(i1);
+            if (checkPassword(guess, alg, hash, salt)) {
+                return guess;
+            }
 
-            // Generar y probar todas las combinaciones posibles de esta longitud
-            while (true) {
+            // longitud 2
+            for (int i2 = 0; i2 < charset.length(); i2++) {
                 npass++;
-                String guess = new String(password);
-                String generatedHash = alg.equals("SHA-512") ? getSHA512AmbSalt(guess, salt)
-                        : getPBKDF2AmbSalt(guess, salt);
-
-                if (generatedHash.equals(hash)) {
+                guess = "" + charset.charAt(i1) + charset.charAt(i2);
+                if (checkPassword(guess, alg, hash, salt)) {
                     return guess;
                 }
 
-                // Incrementar la contraseña al siguiente valor lexicográfico
-                if (!incrementPassword(password, charset)) {
-                    break; // Si no se puede incrementar más, terminamos esta longitud
+                // Longitud 3
+                for (int i3 = 0; i3 < charset.length(); i3++) {
+                    npass++;
+                    guess = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3);
+                    if (checkPassword(guess, alg, hash, salt)) {
+                        return guess;
+                    }
+
+                    for (int i4 = 0; i4 < charset.length(); i4++) {
+                        npass++;
+                        guess = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4);
+                        if (checkPassword(guess, alg, hash, salt)) {
+                            return guess;
+                        }
+
+                        for (int i5 = 0; i5 < charset.length(); i5++) {
+                            npass++;
+                            guess = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4)
+                                    + charset.charAt(i5);
+                            if (checkPassword(guess, alg, hash, salt)) {
+                                return guess;
+                            }
+
+
+                            for (int i6 = 0; i6 < charset.length(); i6++) {
+                                npass++;
+                                guess = "" + charset.charAt(i1) + charset.charAt(i2) + charset.charAt(i3) + charset.charAt(i4)
+                                        + charset.charAt(i5) + charset.charAt(i6);
+                                if (checkPassword(guess, alg, hash, salt)) {
+                                    return guess;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
-        return null; // No se encontró ninguna coincidencia
+
+        return null; //no ha encontrado la contraseña
     }
 
-    // Método auxiliar para incrementar la contraseña
-    private boolean incrementPassword(char[] password, String charset) {
-        for (int i = password.length - 1; i >= 0; i--) {
-            int index = charset.indexOf(password[i]);
-            if (index < charset.length() - 1) {
-                password[i] = charset.charAt(index + 1);
-                return true;
-            } else {
-                password[i] = charset.charAt(0);
-            }
-        }
-        return false; // Si hemos recorrido toda la longitud y no se puede incrementar más
+        //metodo auxiliar para comprobar la contraseña
+    private boolean checkPassword(String guess, String alg, String hash, String salt)
+        throws NoSuchAlgorithmException, Exception {
+        String generatedHash = alg.equals("SHA-512") ? getSHA512AmbSalt(guess, salt)
+                : getPBKDF2AmbSalt(guess, salt);
+        return generatedHash.equals(hash);
     }
+
+
 
     public String getInterval(long t1, long t2) {
         long millis = t2 - t1;
